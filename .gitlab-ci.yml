@@ -1,0 +1,35 @@
+image: tiangolo/docker-with-compose
+
+before_script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+
+stages:
+    - build
+    - test
+    - deploy
+
+build-prod:
+    stage: build
+    script:
+        - docker-compose -f docker-compose.prod.yml build
+        - docker-compose -f docker-compose.prod.yml push
+    only:
+        - master
+    tags:
+        - build
+        
+include:
+    - template: Code-Quality.gitlab-ci.yml              
+    - template: Container-Scanning.gitlab-ci.yml    
+    - template: Dependency-Scanning.gitlab-ci.yml     
+    - template: SAST.gitlab-ci.yml  
+        
+deploy-prod:
+    stage: deploy
+    script:
+        - docker stack deploy -c docker-compose.prod.yml --with-registry-auth production
+    only:
+        - master
+    tags:
+        - swarm
+      
