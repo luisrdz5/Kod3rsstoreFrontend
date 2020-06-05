@@ -8,6 +8,7 @@ import Login from '../containers/Login';
 import Register from '../containers/Register';
 import Home from '../containers/Home';
 import ProductDetail from '../containers/productDetail';
+import Profile from '../containers/Profile'
 
 const App = () => (
   <BrowserRouter>
@@ -19,6 +20,7 @@ const App = () => (
           <Route exact path="/checkout" component={Checkout} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
+          <Route exact path="/profile" component={Profile} />
           <Route component={NotFound} />
         </Switch>
     </Layout>

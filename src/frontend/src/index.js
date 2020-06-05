@@ -7,6 +7,12 @@ import reducer from './reducers';
 
 const initialState = {
   cart: [],
+  user:[{
+    "id":"cbba56ca-60a1-4ad1-b9",
+    "name":"admin",
+    "photo": "https://pbs.twimg.com/profile_images/442983338/DSC00544_400x400.JPG"
+  }
+  ],
   promotions:[
     {
       "id": "1",

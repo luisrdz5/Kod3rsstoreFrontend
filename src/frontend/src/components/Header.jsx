@@ -45,7 +45,7 @@ const Header = (props) => {
             <Link to="/checkout">Carrito</Link>
           </li>
           <li>
-            <Link to="/">Perfil</Link>
+            <Link to="/profile">Perfil</Link>
           </li>
           <li>
             <div className="Header__menu--dark">
