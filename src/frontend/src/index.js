@@ -5,28 +5,46 @@ import { createStore, compose } from 'redux';
 import App from './routes/App';
 import reducer from './reducers';
 
-
-
 const initialState = {
   cart: [],
   promotions:[
     {
       "id": "1",
-      "image": "https://arepa.s3.amazonaws.com/camiseta.png",
+      "image": "https://http2.mlstatic.com/storage/splinter-admin/1587659507607-home-slider_desktop.jpg",
       "title": "Camiseta",
       "link": "https://kod3rsstore.com/"
     },
     {
-      "id": "3",
-      "image": "https://arepa.s3.amazonaws.com/mug.png",
+      "id": "2",
+      "image": "https://http2.mlstatic.com/storage/splinter-admin/1585932561897-home-slider_desktop.jpg",
       "title": "Mug",
       "link": "https://kod3rsstore.com/"
     },
     {
-      "id": "4",
-      "image": "https://arepa.s3.amazonaws.com/pin.png",
+      "id": "3",
+      "image": "https://http2.mlstatic.com/storage/splinter-admin/1588608564043-home-slider_desktop_levis.jpg",
       "title": "Pin",
       "link": "https://kod3rsstore.com/"
+    },
+  ],
+  categories:[
+    {
+      "id": "1",
+      "image": "https://arepa.s3.amazonaws.com/camiseta.png",
+      "title": "Dama",
+      "link": "https://kod3rsstore.com/categories/dama"
+    },
+    {
+      "id": "2",
+      "image": "https://arepa.s3.amazonaws.com/mug.png",
+      "title": "caballero",
+      "link": "https://kod3rsstore.com/categories/caballero"
+    },
+    {
+      "id": "3",
+      "image": "https://arepa.s3.amazonaws.com/pin.png",
+      "title": "Accesorios",
+      "link": "https://kod3rsstore.com/categories/accesorios"
     },
   ],
   products: [
