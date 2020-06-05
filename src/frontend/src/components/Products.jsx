@@ -9,6 +9,9 @@ const Products = (props) => {
   const handleAddToCart = (product) => {
     props.addToCart(product);
   }
+  const handleDetail = (product) => {
+    window.location.href = `/productDetail/${product.id}`;
+  }
 
   return (
     <div className="Products">
@@ -26,6 +29,8 @@ const Products = (props) => {
               </h2>
               <p>{product.description}</p>
               <button type="button" onClick={() => handleAddToCart(product)}>Agregar al carrito</button>
+              <button type="button" onClick={() => handleDetail(product)}>Ver Detalle</button>
+
             </div>
           </div>
         ))}
