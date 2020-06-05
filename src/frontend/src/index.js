@@ -9,6 +9,26 @@ import reducer from './reducers';
 
 const initialState = {
   cart: [],
+  promotions:[
+    {
+      "id": "1",
+      "image": "https://arepa.s3.amazonaws.com/camiseta.png",
+      "title": "Camiseta",
+      "link": "https://kod3rsstore.com/"
+    },
+    {
+      "id": "3",
+      "image": "https://arepa.s3.amazonaws.com/mug.png",
+      "title": "Mug",
+      "link": "https://kod3rsstore.com/"
+    },
+    {
+      "id": "4",
+      "image": "https://arepa.s3.amazonaws.com/pin.png",
+      "title": "Pin",
+      "link": "https://kod3rsstore.com/"
+    },
+  ],
   products: [
     {
       "id": "1",

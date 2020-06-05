@@ -1,6 +1,15 @@
 import React from 'react';
-import Products from '../components/Products';
+import Promotions from '../components/Promotions';
+import '../styles/containers/Home.styl';
 
-const Home = () => <Products />;
+
+const Home = () => {
+
+    return (
+        <div className="Main">
+            <Promotions />
+        </div>
+    );
+};
 
 export default Home;
