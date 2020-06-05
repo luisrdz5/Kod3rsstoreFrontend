@@ -30,18 +30,26 @@ const initialState = {
   categories:[
     {
       "id": "1",
-      "image": "https://arepa.s3.amazonaws.com/camiseta.png",
+      "imageSmall": "https://arepa.s3.amazonaws.com/camiseta.png",
+      "imageMedium": "https://arepa.s3.amazonaws.com/camiseta.png",
+      "imageBig": "https://arepa.s3.amazonaws.com/camiseta.png",
       "title": "Dama",
       "link": "https://kod3rsstore.com/categories/dama"
     },
     {
       "id": "2",
+      "imageSmall": "https://arepa.s3.amazonaws.com/mug.png",
+      "imageMedium": "https://arepa.s3.amazonaws.com/mug.png",
+      "imageBig": "https://arepa.s3.amazonaws.com/mug.png",      
       "image": "https://arepa.s3.amazonaws.com/mug.png",
-      "title": "caballero",
+      "title": "Caballero",
       "link": "https://kod3rsstore.com/categories/caballero"
     },
     {
       "id": "3",
+      "imageSmall": "https://arepa.s3.amazonaws.com/pin.png",
+      "imageMedium": "https://arepa.s3.amazonaws.com/pin.png",
+      "imageBig": "https://arepa.s3.amazonaws.com/pin.png",      
       "image": "https://arepa.s3.amazonaws.com/pin.png",
       "title": "Accesorios",
       "link": "https://kod3rsstore.com/categories/accesorios"
