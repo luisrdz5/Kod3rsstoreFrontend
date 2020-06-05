@@ -7,7 +7,7 @@ const EditProfile = () => {
 
     return (
         <>
-           <p> Edit profile </p> 
+           <p> Here  is the Edit profile Component</p> 
         </>
     )
 }
