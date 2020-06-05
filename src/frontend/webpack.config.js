@@ -29,6 +29,16 @@ module.exports = {
           },
         ],
       },{
+        test: /\.svg$/,
+        use: [
+          {
+            loader: 'svg-url-loader',
+            options: {
+              limit: 10000,
+            },
+          },
+        ],
+      },{
         test: /\.(png|gif|jpg)$/,
         use: [
           {
@@ -38,8 +48,7 @@ module.exports = {
             },
           },
         ],
-      },
-      {
+      },{
         test: /\.css|.styl$/,
         use: [
           {

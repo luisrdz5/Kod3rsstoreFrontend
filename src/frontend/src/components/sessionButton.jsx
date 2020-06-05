@@ -12,7 +12,6 @@ const ButtonSession = (props) => {
     const handleLogin = () => {
       window.location.href = '/login';
     }
-    console.log(hasUser);
 
     return (
         <div className="Header__menu--session">

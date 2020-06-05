@@ -12,19 +12,19 @@ const initialState = {
       "id": "1",
       "image": "https://http2.mlstatic.com/storage/splinter-admin/1587659507607-home-slider_desktop.jpg",
       "title": "Camiseta",
-      "link": "https://kod3rsstore.com/"
+      "link": "/products"
     },
     {
       "id": "2",
       "image": "https://http2.mlstatic.com/storage/splinter-admin/1585932561897-home-slider_desktop.jpg",
       "title": "Mug",
-      "link": "https://kod3rsstore.com/"
+      "link": "/products"
     },
     {
       "id": "3",
       "image": "https://http2.mlstatic.com/storage/splinter-admin/1588608564043-home-slider_desktop_levis.jpg",
       "title": "Pin",
-      "link": "https://kod3rsstore.com/"
+      "link": "/products"
     },
   ],
   categories:[
@@ -34,7 +34,7 @@ const initialState = {
       "imageMedium": "https://arepa.s3.amazonaws.com/stickers1.png",
       "imageBig": "https://arepa.s3.amazonaws.com/stickers1.png",
       "title": "Dama",
-      "link": "https://kod3rsstore.com/categories/dama"
+      "link": "/products"
     },
     {
       "id": "2",
@@ -42,7 +42,7 @@ const initialState = {
       "imageMedium": "https://arepa.s3.amazonaws.com/mug.png",
       "imageBig": "https://arepa.s3.amazonaws.com/mug.png",    
       "title": "Caballero",
-      "link": "https://kod3rsstore.com/categories/caballero"
+      "link": "/products"
     },
     {
       "id": "3",
@@ -50,7 +50,7 @@ const initialState = {
       "imageMedium": "https://arepa.s3.amazonaws.com/camiseta.png",
       "imageBig": "https://arepa.s3.amazonaws.com/camiseta.png",     
       "title": "Accesorios",
-      "link": "https://kod3rsstore.com/categories/accesorios"
+      "link": "/products"
     },
   ],
   products: [

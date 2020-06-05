@@ -12,16 +12,15 @@ const Categories = (props) => {
     <div className="Main__Categories">
         {categories.map(category => {
             styleId++;
-            console.log(category);
         return (
-            <div className="Main__Category">
-                <span className="Main__Category--title">{category.title}</span>
-                <div className="Main__Category--img">
+            <div className="Main__Category" key={styleId}>
+                <span className="Main__Category--title" key={styleId}>{category.title}</span>
+                <div className="Main__Category--img" >
                     <Link to={category.link} key={styleId}>
                         <picture key={styleId}>
-                            <source srcset={category.imageBig} media="(min-width: 1200px)"/>
-                            <source srcset={category.imageMedium} media="(min-width: 600px)"/>
-                            <img src={category.imageSmall} alt="category image" />
+                            <source srcSet={category.imageBig} media="(min-width: 1200px)"/>
+                            <source srcSet={category.imageMedium} media="(min-width: 600px)"/>
+                            <img src={category.imageSmall} alt="category image" key={styleId} />
                         </picture>
                     </Link>
                 </div>
