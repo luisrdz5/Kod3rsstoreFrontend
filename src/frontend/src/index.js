@@ -30,9 +30,9 @@ const initialState = {
   categories:[
     {
       "id": "1",
-      "imageSmall": "https://arepa.s3.amazonaws.com/camiseta.png",
-      "imageMedium": "https://arepa.s3.amazonaws.com/camiseta.png",
-      "imageBig": "https://arepa.s3.amazonaws.com/camiseta.png",
+      "imageSmall": "https://arepa.s3.amazonaws.com/stickers1.png",
+      "imageMedium": "https://arepa.s3.amazonaws.com/stickers1.png",
+      "imageBig": "https://arepa.s3.amazonaws.com/stickers1.png",
       "title": "Dama",
       "link": "https://kod3rsstore.com/categories/dama"
     },
@@ -40,17 +40,15 @@ const initialState = {
       "id": "2",
       "imageSmall": "https://arepa.s3.amazonaws.com/mug.png",
       "imageMedium": "https://arepa.s3.amazonaws.com/mug.png",
-      "imageBig": "https://arepa.s3.amazonaws.com/mug.png",      
-      "image": "https://arepa.s3.amazonaws.com/mug.png",
+      "imageBig": "https://arepa.s3.amazonaws.com/mug.png",    
       "title": "Caballero",
       "link": "https://kod3rsstore.com/categories/caballero"
     },
     {
       "id": "3",
-      "imageSmall": "https://arepa.s3.amazonaws.com/pin.png",
-      "imageMedium": "https://arepa.s3.amazonaws.com/pin.png",
-      "imageBig": "https://arepa.s3.amazonaws.com/pin.png",      
-      "image": "https://arepa.s3.amazonaws.com/pin.png",
+      "imageSmall": "https://arepa.s3.amazonaws.com/camiseta.png",
+      "imageMedium": "https://arepa.s3.amazonaws.com/camiseta.png",
+      "imageBig": "https://arepa.s3.amazonaws.com/camiseta.png",     
       "title": "Accesorios",
       "link": "https://kod3rsstore.com/categories/accesorios"
     },
