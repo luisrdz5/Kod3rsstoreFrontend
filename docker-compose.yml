@@ -5,7 +5,7 @@ services:
     image: 'backend-ssr:latest'
     container_name: backend-ssr
     build:
-      context: ./src/SSR-server
+      context: ./SSR-server
       dockerfile: Dockerfile
     ports:
       - '8000:8000'
@@ -18,7 +18,7 @@ services:
     container_name: frontend 
     stdin_open: true
     build:
-      context: ./src/Frontend
+      context: ./Frontend
       dockerfile: Dockerfile
     ports:
       - '3000:3000'
