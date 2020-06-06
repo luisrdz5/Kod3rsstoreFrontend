@@ -41,6 +41,10 @@ const ProductDetail = (props) => {
         <div onClick={handleAddToCart} className="Card-detail__add-to-cart">
           <label>Agregar al carrito</label>
         </div>
+        <div className="Card-detail__add-to-cart">
+            <Link to="/checkout"><label>Pagar</label></Link>
+        </div>
+           
       </div>
     </section>
     )

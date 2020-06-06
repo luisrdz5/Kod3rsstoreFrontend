@@ -202,6 +202,7 @@ app.get(
 
 app.post('/stripe/:userId',urlencodedParser,  async (req, res, next) => {
     try {
+      console.log(req);
       const { userId } = req.params;
       const { token } = req.cookies;
       console.log(`${config.apiUrl}/api/payment/stripe/checkout/${userId}`);

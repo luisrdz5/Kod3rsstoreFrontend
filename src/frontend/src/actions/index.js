@@ -9,6 +9,10 @@ export const deleteFromCart = payload => ({
   type: 'DELETE_FROM_CART',
   payload,
 });
+export const emptyCart = payload => ({
+  type: 'EMPTY_CART',
+  payload,
+})
 export const loginRequest = (payload) => ({
   type: 'LOGIN_REQUEST',
   payload,
@@ -82,3 +86,28 @@ export const loginUserGoogle = (redirectUrl) => {
   //window.location.href = `${domain}/auth/google-oauth`;
   window.location.href = `${domain}/auth/google`;
 };
+export const sendPayment =  ({token, addresses}) => {
+  return (dispatch) => {
+    axios.post(
+      `${domain}/stripe/${token.id}`,
+      { stripeToken: token,
+        stripeEmail: token.email,
+        description: "Compra en Kod3rsstore.com" 
+      }
+    ).then(({ data }) => {
+      if (data.status === "success") {
+        dispatch(emptyCart());
+        console.log("success" );
+      } else {
+        console.log("error");
+      }
+    })
+    .catch((err) => dispatch(setError(err)));
+
+
+  }
+
+
+
+
+}

@@ -14,6 +14,11 @@ const reducer = (state, action) => {
           ...state,
           cart: state.cart.filter((items) => items.key !== action.payload)
         }
+      case 'EMPTY_CART':
+        return {
+          ...state,
+          cart: []
+        }
       case 'LOGIN_REQUEST':
         return {
           ...state,

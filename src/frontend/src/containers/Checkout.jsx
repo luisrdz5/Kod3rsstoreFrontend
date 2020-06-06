@@ -1,14 +1,26 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import '../styles/components/Checkout.styl';
-import { deleteFromCart }  from '../actions';
+import { deleteFromCart, emptyCart, sendPayment }  from '../actions';
+import StripeCheckout from 'react-stripe-checkout';
 
-const Checkout = (props) => {
+
+const Checkout =  (props) => {
   const { cart } = props;
+
   const handleDeleteElement = (itemId) => {
     props.deleteFromCart(itemId);
   };
+
+  function handleToken(token, addresses) {
+
+    props.sendPayment(token, addresses);
+  }
+
+
+  
   return (
+  <>    
     <div className="Checkout">
       <div className="Checkout-content">
         {cart.length > 0 ? <h3>Lista de Pedidos:</h3> : <h2>Sin Pedidos</h2>}
@@ -35,6 +47,16 @@ const Checkout = (props) => {
         </div>
       )}
     </div>
+    <div className="Checkout-payments">
+      <StripeCheckout 
+        stripeKey="pk_test_Qy6uIqE3a6pG8GzGH4Xx1QCr00SK89OIVE"
+        token={handleToken}
+        amount={cart.reduce((suma, item) => (suma + item.price),0) *100 }
+        name="Kod3rsstore.com"
+      />
+
+    </div>
+  </>
   )
 };
 
@@ -45,6 +67,8 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = {
   deleteFromCart,
+  emptyCart,
+  sendPayment,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Checkout);
