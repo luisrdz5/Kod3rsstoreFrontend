@@ -10,8 +10,11 @@ import searchIcon from '../assets/images/search-icon.png';
 import logo from '../assets/images/logo.png';
 import shoppingCart from '../assets/images/logo_shopping_cart.png';
 
-
 const Header = (props) => {
+  const handleMenu = () => {
+    
+  }
+
   return (
   <div className="Header">
     <div className="Header__principal">
@@ -38,15 +41,21 @@ const Header = (props) => {
                 Menu
             </div>
           </div>
-          <li>
-            <Link to="/">Inicio</Link>
-          </li>
-          <li>
-            <Link to="/checkout">Carrito</Link>
-          </li>
-          <li>
-            <Link to="/profile">Perfil</Link>
-          </li>
+          <Link to="/">
+            <li>
+              Inicio
+            </li>
+          </Link>
+          <Link to="/checkout">
+            <li>
+              Carrito
+            </li>
+          </Link>
+          <Link to="/profile">
+            <li>
+              Perfil
+            </li>
+          </Link>
           <li>
             <div className="Header__menu--dark">
               Dark mode <input name="dark" type="checkbox" className="Header__menu--darkMode" /> 
