@@ -6,8 +6,7 @@ import ProductDetailCard from '../components/ProductDetailCard';
 
 const ProductDetail = (props) => {
     const { id } = props.match.params;
-    const {products } = props;
-    console.log(products)
+    const { products } = props;
     const product = products.filter( item => item.id === id);
     return (
         <>
