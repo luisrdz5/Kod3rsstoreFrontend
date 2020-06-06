@@ -1,13 +1,23 @@
 import React from 'react';
+import { connect } from 'react-redux'
+
+import ProductDetailCard from '../components/ProductDetailCard';
 
 
 const ProductDetail = (props) => {
     const { id } = props.match.params;
-
+    const {products } = props;
+    console.log(products)
+    const product = products.filter( item => item.id === id);
     return (
         <>
-            Product Detail {id}
+          <ProductDetailCard {...product} />
         </>
     )
 }
-export default ProductDetail;
+const mapStateToProps = (state) => {
+    return {
+      products: state.products,
+    };
+  };
+export default connect( mapStateToProps, null)(ProductDetail);
