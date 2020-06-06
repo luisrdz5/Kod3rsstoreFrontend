@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { addToCart }  from '../actions';
 import '../styles/components/Products.styl';
@@ -29,7 +30,12 @@ const Products = (props) => {
               </h2>
               <p>{product.description}</p>
               <button type="button" onClick={() => handleAddToCart(product)}>Agregar al carrito</button>
-              <button type="button" onClick={() => handleDetail(product)}>Ver Detalle</button>
+              <Link to={{
+                            pathname: `/productDetail/${product.id}`,
+                            product:props
+                        }}>
+                <button type="button">Ver Detalle</button>
+              </Link>
 
             </div>
           </div>
