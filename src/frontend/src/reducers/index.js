@@ -27,6 +27,12 @@ const reducer = (state, action) => {
           ...state,
           user: action.payload,
         };
+      case 'TOGGLE_CHANGE':
+        document.getElementById("toggle").checked = false;
+        return {
+          ...state,
+          isChecked: false,
+        };
     default:
       return state;
   }

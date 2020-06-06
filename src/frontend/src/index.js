@@ -7,6 +7,7 @@ import reducer from './reducers';
 
 const initialState = {
   cart: [],
+  isChecked: false,
   user:[{
     "id_users":"cbba56ca-60a1-4ad1-b9",
     "first_name":"Luis Antonio Rodríguez García",

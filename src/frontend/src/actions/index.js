@@ -17,6 +17,12 @@ export const logoutRequest = (payload) => ({
   type: 'LOGOUT_REQUEST',
   payload,
 });
+
+export const toggleChange = (payload) => ({
+  type: 'TOGGLE_CHANGE',
+  payload,
+})
+
 export const registerUser = (payload, redirectUrl) => {
 
   return (dispatch) => {

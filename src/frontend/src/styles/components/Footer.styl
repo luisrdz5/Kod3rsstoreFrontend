@@ -1,6 +1,7 @@
 .Footer
     display flex
     flex-direction column
+    font-size $font-size
     &__navContainer
         display flex
         flex-direction column
@@ -15,6 +16,11 @@
         justify-content space-around
         padding 10px 0 0 0
         align-items center
-        font-size 1em
+        font-size $font-size
     &__socialContainer img
         width 15px
+@media only screen and (min-width 1200px) 
+    .Footer
+        margin 0 auto 0 auto   
+        width 1200px   
+        justify-content center        
