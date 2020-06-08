@@ -12,9 +12,13 @@ const Checkout =  (props) => {
     props.deleteFromCart(itemId);
   };
 
-  function handleToken(token, addresses) {
-
-    props.sendPayment(token, addresses);
+  function handleToken(token) {
+    const payload = { stripeToken: token,
+      stripeEmail: token.email,
+      description: "Compra en Kod3rsstore.com" 
+    }
+//Esto se debe trabajar hasta que se este trabajando en el ssr 
+    //props.sendPayment(token.id, payload);
   }
 
 

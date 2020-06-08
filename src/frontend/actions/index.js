@@ -1,5 +1,8 @@
+import axios from 'axios';
+
 //const domain = 'https://www.kod3rsstore.com';
 const domain = 'http://localhost:8000';
+
 
 export const addToCart = payload => ({
   type: 'ADD_TO_CART',
@@ -21,12 +24,22 @@ export const logoutRequest = (payload) => ({
   type: 'LOGOUT_REQUEST',
   payload,
 });
+export const setPayment = (payload) => ({
+  type: 'SET_PAYMENT',
+  payload,
+});
+
+
+
 
 export const toggleChange = (payload) => ({
   type: 'TOGGLE_CHANGE',
   payload,
 })
-
+export const setError = (payload) => ({
+  type: 'SET_ERROR',
+  payload,
+});
 export const registerUser = (payload, redirectUrl) => {
 
   return (dispatch) => {
@@ -86,28 +99,25 @@ export const loginUserGoogle = (redirectUrl) => {
   //window.location.href = `${domain}/auth/google-oauth`;
   window.location.href = `${domain}/auth/google`;
 };
-export const sendPayment =  ({token, addresses}) => {
+export const sendPayment =  (id, payload) => {
   return (dispatch) => {
-    axios.post(
-      `${domain}/stripe/${token.id}`,
-      { stripeToken: token,
-        stripeEmail: token.email,
-        description: "Compra en Kod3rsstore.com" 
+    try{
+      console.log(`${domain}/stripe/${id}`);
+      axios.post(`/stripe/${id}`,{
+      body: payload, 
+      mode: 'no-cors',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
       }
-    ).then(({ data }) => {
-      if (data.status === "success") {
-        dispatch(emptyCart());
-        console.log("success" );
-      } else {
-        console.log("error");
-      }
-    })
-    .catch((err) => dispatch(setError(err)));
-
+      }).then((data) => {
+        dispatch(setPayment(data));
+      })
+      .catch((err) => dispatch(setError(err)));
+    }catch(error){
+      console.log(error);
+    }
 
   }
-
-
-
 
 }

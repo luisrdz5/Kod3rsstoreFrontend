@@ -10,6 +10,7 @@ import Home from '../containers/Home';
 import ProductDetail from '../containers/productDetail';
 import Profile from '../containers/Profile'
 
+
 const App = () => (
   <BrowserRouter>
     <Layout>

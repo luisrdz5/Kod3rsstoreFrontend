@@ -4,6 +4,7 @@ import Categories from '../components/Categories';
 import '../styles/containers/Home.styl';
 
 
+
 const Home = () => {
 
     return (

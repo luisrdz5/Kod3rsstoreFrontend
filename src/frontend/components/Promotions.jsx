@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import '../styles/components/Promotions.styl'
 
 
+
 const promotions = (props) => {
     const { promotions } = props;
     let styleId=0;

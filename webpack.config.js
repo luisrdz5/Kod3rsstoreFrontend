@@ -1,9 +1,10 @@
 const path = require('path');
-const HtmlWebPackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-  entry:  path.resolve(__dirname, 'src/index.js'),
+  entry:  ['./src/frontend/index.js', 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=2000&reload=true'],
+  mode: 'development',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'assets/app.js',
@@ -58,9 +59,7 @@ module.exports = {
           {
             loader: 'stylus-loader',
             options: {
-              import: [
-                  path.resolve(__dirname, './src/styles/components/Variables.styl') 
-              ]
+              import: [path.resolve(__dirname, './src/styles/Variables.styl')]
             }
           }
           
@@ -68,17 +67,13 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    new HtmlWebPackPlugin({
-      template: './public/index.html',
-      filename: './index.html',
-    }),
-    new MiniCssExtractPlugin({
-      filename: 'assets/[name].css',
-    }),
-  ],
   devServer: {
-    contentBase: path.join(__dirname, 'public'),
-    historyApiFallback: true // this prevents the default browser full page refresh on form submission and link change
-    }
+    historyApiFallback: true 
+    },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new MiniCssExtractPlugin({
+      filename: 'assets/app.css',
+    }),
+  ]
 };

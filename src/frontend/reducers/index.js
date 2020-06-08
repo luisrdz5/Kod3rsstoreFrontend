@@ -19,6 +19,11 @@ const reducer = (state, action) => {
           ...state,
           cart: []
         }
+      case 'SET_ERROR':
+        return {
+          ...state,
+          user: action.payload,
+      }
       case 'LOGIN_REQUEST':
         return {
           ...state,
