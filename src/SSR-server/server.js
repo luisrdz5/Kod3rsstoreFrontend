@@ -13,6 +13,8 @@ import initialState from '../frontend/initialState';
 
 import serverRoutes from '../frontend/routes/ServerRoutes';
 
+import getManifest from './getManifest.js';
+
 
 //const passport = require('passport');
 //const boom = require('@hapi/boom');
@@ -36,20 +38,29 @@ if(ENV === 'development'){
     app.use(webpackHotMiddleware(compiler));
 
 }else {
+  app.use((req, res, next) => {
+    if (!req.hashManifest) req.hashManifest = getManifest();
+    next();
+  });
+
   app.use(express.static(`${__dirname}/public`));
   app.use(helmet());
   app.use(helmet.permittedCrossDomainPolicies());
   app.disable('x-powered-by');
 }
 
-const setResponse = (html, preloadedState) => {
+const setResponse = (html, preloadedState, manifest) => {
+  const mainStyles = manifest ? manifest['main.css'] : 'assets/app.css';
+  const mainBuild = manifest ? manifest['main.js'] : 'assets/app.js';
+
+
   return (`
     <!DOCTYPE html>
     <html lang="es">
       <head>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <link rel="stylesheet" href="assets/app.css" type="text/css" />
+        <link rel="stylesheet" href="${mainStyles}" type="text/css" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <title>Kod3rs Store</title>
@@ -60,7 +71,7 @@ const setResponse = (html, preloadedState) => {
         <script>
           window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
         </script>
-        <script src="assets/app.js" type="text/javascript"> </script>
+        <script src="${mainBuild}" type="text/javascript"> </script>
         <script src="https://kit.fontawesome.com/473d269aa9.js"></script>
       </body>
     </html>
@@ -77,7 +88,7 @@ const renderApp = (req, res) => {
       </StaticRouter>
     </Provider>
   );
-  res.send(setResponse(html, preloadedState));
+  res.send(setResponse(html, preloadedState, req.hashManifest));
 }
 
 app.get('*', renderApp);

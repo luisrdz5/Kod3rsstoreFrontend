@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
 
 
 const { config } = require('./src/config');
@@ -19,7 +20,7 @@ module.exports = {
   mode: config.env,
   output: {
     path: path.resolve(__dirname, 'src/SSR-server/public'),
-    filename: 'assets/app.js',
+    filename: isDev ? 'assets/app.js': 'assets/app-[hash].js', 
     publicPath: '/',
   },
   resolve: {
@@ -86,8 +87,10 @@ module.exports = {
       test: /\.js$|\.css$/,
       filename: '[path].gz'
     }),
+    isDev ? () => { } :
+    new ManifestPlugin(),
     new MiniCssExtractPlugin({
-      filename: 'assets/app.css',
+      filename: isDev ? 'assets/app.css':  'assets/app-[hash].css',
     }),
   ]
 };
