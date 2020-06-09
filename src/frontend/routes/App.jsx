@@ -8,7 +8,7 @@ import Login from '../containers/Login';
 import Register from '../containers/Register';
 import Home from '../containers/Home';
 import ProductDetail from '../containers/productDetail';
-import Profile from '../containers/Profile'
+import Profile from '../containers/Profile';
 
 
 const App = () => (
