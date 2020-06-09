@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { registerUser } from '../actions';
 import '../styles/containers/Register.styl';
 
+
 const Register = (props) => {
   const [form, setValues] = useState({
     email: '',

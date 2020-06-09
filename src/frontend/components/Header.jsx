@@ -4,11 +4,16 @@ import { connect } from 'react-redux';
 import '../styles/components/Header.styl';
 import ButtonSession from '../components/sessionButton';
 
+
 import avatarGrey from '../assets/images/avatar-grey.png';
 import flag from '../assets/images/flag.png';
 import searchIcon from '../assets/images/search-icon.png';
 import logo from '../assets/images/logo.png';
 import shoppingCart from '../assets/images/logo_shopping_cart.png';
+
+
+import '../styles/Variables.styl';
+
 
 import { toggleChange } from '../actions/index';
 

@@ -4,6 +4,7 @@ import ShowProfile from '../components/ShowProfile';
 import EditProfile from '../components/EditProfile';
 
 
+
 const Profile = (props) => {
   const { edit } = props.match.params;
 

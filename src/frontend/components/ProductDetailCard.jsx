@@ -4,6 +4,8 @@ import '../styles/components/ProductDetailCard.styl';
 import { connect } from 'react-redux';
 import { addToCart } from '../actions/index';
 
+
+
 const ProductDetail = (props) => {
   const product = props[0];
   const { description, id, image, price, qty, title } = product; 

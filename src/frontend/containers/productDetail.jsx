@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import ProductDetailCard from '../components/ProductDetailCard';
 
 
+
 const ProductDetail = (props) => {
     const { id } = props.match.params;
     const { products } = props;

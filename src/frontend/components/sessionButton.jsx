@@ -2,6 +2,7 @@ import React from 'react';
 import { logoutRequest } from '../actions';
 import { connect } from 'react-redux';
 
+
 const ButtonSession = (props) => {
     const { user } = props;
     const hasUser = user ;

@@ -5,6 +5,7 @@ import { deleteFromCart, emptyCart, sendPayment }  from '../actions';
 import StripeCheckout from 'react-stripe-checkout';
 
 
+
 const Checkout =  (props) => {
   const { cart } = props;
 
