@@ -1,6 +1,6 @@
 const express = require('express');
 const webpack = require('webpack');
-import helmet from ' helmet';
+const  helmet =require('helmet');
 
 import React from 'react';
 import { renderToString } from 'react-dom/server';
@@ -47,11 +47,11 @@ const setResponse = (html, preloadedState) => {
     <!DOCTYPE html>
     <html lang="es">
       <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link rel="stylesheet" href="assets/app.css" type="text/css">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <link rel="stylesheet" href="assets/app.css" type="text/css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <title>Kod3rs Store</title>
         
       </head>
