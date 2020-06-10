@@ -16,10 +16,10 @@ import serverRoutes from '../frontend/routes/ServerRoutes';
 import getManifest from './getManifest.js';
 
 
-//const passport = require('passport');
-//const boom = require('@hapi/boom');
-//const cookieParser = require('cookie-parser');
-//const axios = require('axios');
+const passport = require('passport');
+const boom = require('@hapi/boom');
+const cookieParser = require('cookie-parser');
+const axios = require('axios');
 
 const { config } = require("../config/index");
 const { ENV, PORT } = process.env;
@@ -93,6 +93,99 @@ const renderApp = (req, res) => {
   res.send(setResponse(html, preloadedState, req.hashManifest));
 }
 
+
+/**
+ * Using a body parser to work with the information
+ */
+app.use(express.json());
+/**
+ * Using a cookie parser to work with the cookies of the client
+ */
+app.use(cookieParser());
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+/**
+ * We get the passport basic strategy to use the email password authentication 
+ */
+require('./utils/auth/strategies/basic');
+
+/**
+ * Sign in Endpoint
+ */
+app.post("/auth/sign-in", async function(req, res, next) {
+  console.log('entre a sign in')
+/**
+ * Get the rememberme attirbute 
+ * if rememberme is true we give 30 days lifetime to the cookie 
+ * if rememberme is false we give 2 hours lifetime to the cookie 
+*/
+    const { rememberMe } = req.body; 
+
+/**
+ * Call to the basic authentication
+*/
+    passport.authenticate("basic", function(error, data) {
+        try{
+        /**
+         * verifying the user authentication
+        */
+            if(error || !data){
+                next(boom.unauthorized());
+            }
+            
+            req.login(data, { session: false }, async function(error){
+                if(error){
+                    next(error);
+                }
+                /**
+                 * Creating the cookie in the client browser
+                */
+               const { token, ...user } = data.body;
+                res.cookie("token", token, {
+                    httpOnly: !config.dev,
+                    secure: !config.dev,
+                    maxAge: rememberMe ? THIRTY_DAYS_IN_SEC : TWO_HOURS_IN_SEC
+                });
+                /**
+                 * Response to the user
+                */
+               console.log(`respuesta: ${user}`);
+                res.status(200).json(user);
+            })
+        }catch(error) {
+            next(error);
+        }
+
+    })(req, res, next)
+});
+/**
+ * Sign up Endpoint 
+ */
+app.post("/auth/sign-up", async function(req, res, next) {
+    const { body: user } = req;
+
+    try{
+        await axios({
+            url: `${config.apiUrl}/api/auth/sign-up`,
+            method: "post",
+            data: user
+        });
+        /* *
+         * Response to the user
+        */
+        res.status(201).json({ message: "user created "})
+
+    }catch(error){
+        next(error);
+    }
+});
+
+
+
+
 app.get('*', renderApp);
 
 app.listen(PORT, (err) => {
@@ -115,21 +208,11 @@ app.listen(PORT, (err) => {
 // const THIRTY_DAYS_IN_SEC = 2592000;
 // const TWO_HOURS_IN_SEC = 7200;
 
-// /**
-//  * Using a body parser to work with the information
-//  */
-// app.use(express.json());
-// /**
-//  * Using a cookie parser to work with the cookies of the client
-//  */
-// app.use(cookieParser());
+
+
 // body-parser
 // const bodyParser = require('body-parser')
 // let urlencodedParser = bodyParser.urlencoded({ extended: false })
-// /**
-//  * We get the passport basic strategy to use the email password authentication 
-//  */
-// require('./utils/auth/strategies/basic');
 
 // /**
 //  * We get the passport  strategy to use oauth authentication 
@@ -144,76 +227,6 @@ app.listen(PORT, (err) => {
 // require('./utils/auth/strategies/google');
 
 
-// /**
-//  * Sign in Endpoint
-//  */
-// app.post("/auth/sign-in", async function(req, res, next) {
-//   console.log('entre a sign in')
-// /**
-//  * Get the rememberme attirbute 
-//  * if rememberme is true we give 30 days lifetime to the cookie 
-//  * if rememberme is false we give 2 hours lifetime to the cookie 
-// */
-//     const { rememberMe } = req.body; 
-
-// /**
-//  * Call to the basic authentication
-// */
-//     passport.authenticate("basic", function(error, data) {
-//         try{
-//         /**
-//          * verifying the user authentication
-//         */
-//             if(error || !data){
-//                 next(boom.unauthorized());
-//             }
-            
-//             req.login(data, { session: false }, async function(error){
-//                 if(error){
-//                     next(error);
-//                 }
-//                 /**
-//                  * Creating the cookie in the client browser
-//                 */
-//                const { token, ...user } = data.body;
-//                 res.cookie("token", token, {
-//                     httpOnly: !config.dev,
-//                     secure: !config.dev,
-//                     maxAge: rememberMe ? THIRTY_DAYS_IN_SEC : TWO_HOURS_IN_SEC
-//                 });
-//                 /**
-//                  * Response to the user
-//                 */
-//                console.log(`respuesta: ${user}`);
-//                 res.status(200).json(user);
-//             })
-//         }catch(error) {
-//             next(error);
-//         }
-
-//     })(req, res, next)
-// });
-// /**
-//  * Sign up Endpoint 
-//  */
-// app.post("/auth/sign-up", async function(req, res, next) {
-//     const { body: user } = req;
-
-//     try{
-//         await axios({
-//             url: `${config.apiUrl}/api/auth/sign-up`,
-//             method: "post",
-//             data: user
-//         });
-//         /* *
-//          * Response to the user
-//         */
-//         res.status(201).json({ message: "user created "})
-
-//     }catch(error){
-//         next(error);
-//     }
-// });
 // /**
 //  * request to google-oauth
 //  */
