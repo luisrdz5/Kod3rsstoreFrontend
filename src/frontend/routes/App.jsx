@@ -10,21 +10,20 @@ import Home from '../containers/Home';
 import ProductDetail from '../containers/productDetail';
 import Profile from '../containers/Profile';
 
-
 const App = () => (
   <BrowserRouter>
     <Layout>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/products" component={Products} />
-          <Route exact path="/productDetail/:id" component={ProductDetail} />
-          <Route exact path="/checkout" component={Checkout} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/register" component={Register} />
-          <Route exact path="/profile" component={Profile} />
-          <Route exact path="/profile/:edit" component={Profile} />
-          <Route component={NotFound} />
-        </Switch>
+      <Switch>
+        <Route exact path='/' component={Home} />
+        <Route exact path='/products' component={Products} />
+        <Route exact path='/productDetail/:id' component={ProductDetail} />
+        <Route exact path='/checkout' component={Checkout} />
+        <Route exact path='/login' component={Login} />
+        <Route exact path='/register' component={Register} />
+        <Route exact path='/profile' component={Profile} />
+        <Route exact path='/profile/:edit' component={Profile} />
+        <Route component={NotFound} />
+      </Switch>
     </Layout>
   </BrowserRouter>
 );

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { addToCart }  from '../actions';
+import { addToCart } from '../actions';
 
 import '../styles/components/Products.styl';
 
@@ -10,18 +10,15 @@ const Products = (props) => {
 
   const handleAddToCart = (product) => {
     props.addToCart(product);
-  }
-  const handleDetail = (product) => {
-    window.location.href = `/productDetail/${product.id}`;
-  }
+  };
 
   return (
-    <div className="Products">
-      <div className="Products-items">
+    <div className='Products'>
+      <div className='Products-items'>
         {products.map(product => (
-          <div className="Products-item" key={product.id}>
+          <div className='Products-item' key={product.id}>
             <img src={product.image} alt={product.title} />
-            <div className="Products-item-info">
+            <div className='Products-item-info'>
               <h2>
                 {product.title}
                 <span>
@@ -30,12 +27,13 @@ const Products = (props) => {
                 </span>
               </h2>
               <p>{product.description}</p>
-              <button type="button" onClick={() => handleAddToCart(product)}>Agregar al carrito</button>
+              <button type='button' onClick={() => handleAddToCart(product)}>Agregar al carrito</button>
               <Link to={{
-                            pathname: `/productDetail/${product.id}`,
-                            product:props
-                        }}>
-                <button type="button">Ver Detalle</button>
+                pathname: `/productDetail/${product.id}`,
+                product: props,
+              }}
+              >
+                <button type='button'>Ver Detalle</button>
               </Link>
 
             </div>
@@ -44,9 +42,9 @@ const Products = (props) => {
       </div>
     </div>
   );
-}
+};
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     products: state.products,
   };

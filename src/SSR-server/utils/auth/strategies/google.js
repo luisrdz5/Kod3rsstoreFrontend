@@ -3,7 +3,7 @@ const { OAuth2Strategy: GoogleStrategy } = require("passport-google-oauth");
 const axios = require('axios');
 const boom = require('@hapi/boom');
 
-const { config } = require("../../../config/index");
+const { config } = require("../../../../config/index");
 
 passport.use(
   new GoogleStrategy(

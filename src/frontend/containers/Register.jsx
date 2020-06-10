@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { registerUser } from '../actions';
 import '../styles/containers/Register.styl';
 
-
 const Register = (props) => {
   const [form, setValues] = useState({
     email: '',
@@ -20,7 +19,6 @@ const Register = (props) => {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(`se envia: ${login}`);
     props.registerUser(form, '/login');
   };
   return (
@@ -57,7 +55,7 @@ const Register = (props) => {
           </form>
           <p className='Register__container--register'>
             <Link to='/login'>
-                      Iniciar Sesión
+              Iniciar Sesión
             </Link>
           </p>
         </section>

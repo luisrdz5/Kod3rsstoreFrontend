@@ -1,11 +1,14 @@
-import React,{ useState } from 'react';
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable jsx-a11y/label-has-for */
+/* eslint-disable react/button-has-type */
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import googleIcon from '../assets/images/google.png';
 import { loginRequest } from '../actions';
-import { loginUser, loginUserGoogle } from '../actions';
-import '../styles/containers/Login.styl';
+//import {  loginUser, loginUserGoogle } from '../actions';
 
+import '../styles/containers/Login.styl';
 
 const Login = (props) => {
   const [form, setValues] = useState({
@@ -19,17 +22,16 @@ const Login = (props) => {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-		props.loginRequest(form);
-		props.history.push('/'); 
+    props.loginRequest(form);
+    props.history.push('/');
   };
 
   const handleGoogle = (event) => {
     event.preventDefault();
-		props.loginRequest(form);
-		props.history.push('/'); 
+    props.loginRequest(form);
+    props.history.push('/');
     //props.loginUserGoogle('/');
   };
-
 
   return (
     <>
