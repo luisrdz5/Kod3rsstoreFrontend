@@ -71,7 +71,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   deleteFromCart,
   emptyCart,
-  sendPayment,
+  //sendPayment,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Checkout);

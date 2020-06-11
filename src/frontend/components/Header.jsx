@@ -12,6 +12,8 @@ import searchIcon from '../assets/images/search-icon.png';
 import logo from '../assets/images/logo.png';
 import shoppingCart from '../assets/images/logo_shopping_cart.png';
 
+import { toggleChange } from '../actions/index';
+
 const Header = (props) => {
 
   const { toggleChange, cart } = props;

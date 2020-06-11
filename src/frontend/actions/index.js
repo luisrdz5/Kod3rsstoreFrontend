@@ -48,6 +48,10 @@ export const setError = payload => ({
   payload,
 });
 
+export const toggleChange = payload => ({
+  type: 'TOGGLE_CHANGE',
+  payload,
+});
 export const registerUser = (payload, redirectUrl) => {
   return (dispatch) => {
     axios.post('/auth/sign-up', payload)
