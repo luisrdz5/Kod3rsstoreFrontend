@@ -47,6 +47,9 @@ export const setError = payload => ({
   type: 'SET_ERROR',
   payload,
 });
+export const redirect = (redirectUrl) => {
+  window.location.href = redirectUrl;
+};
 
 export const toggleChange = payload => ({
   type: 'TOGGLE_CHANGE',
@@ -60,6 +63,35 @@ export const registerUser = (payload, redirectUrl) => {
         window.location.href = redirectUrl;
       })
       .catch(error => dispatch(setError(error)));
+  };
+};
+
+export const loginUser = ({ email, password, rememberMe }, redirectUrl) => {
+  return (dispatch) => {
+    axios({
+      url: '/auth/sign-in',
+      method: 'post',
+      auth: {
+        username: email,
+        password,
+      },
+      data: {
+        rememberMe,
+      },
+    })
+      .then(({ data }) => {
+        const { user, token } = data;
+        document.cookie = `email=${user.user.email}`;
+        document.cookie = `name=${user.user.first_name}`;
+        document.cookie = `id=${user.user.id_users}`;
+        document.cookie = `photo=${user.user.photo}`;
+        document.cookie = `token=${token}`;
+        dispatch(loginRequest(user.user));
+      })
+      .then(() => {
+        dispatch(redirect(redirectUrl));
+      })
+      .catch(err => dispatch(setError(err)));
   };
 };
 

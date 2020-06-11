@@ -1,7 +1,3 @@
-const express = require('express');
-const webpack = require('webpack');
-const  helmet =require('helmet');
-
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
@@ -9,35 +5,44 @@ import { createStore } from 'redux';
 import { renderRoutes } from 'react-router-config';
 import { StaticRouter } from 'react-router-dom';
 import reducer from '../frontend/reducers';
-import initialState from '../frontend/initialState'; 
+import initialState from '../frontend/initialState';
 
 import serverRoutes from '../frontend/routes/ServerRoutes';
 
-import getManifest from './getManifest.js';
+import getManifest from './getManifest';
 
+const express = require('express');
+const webpack = require('webpack');
+const helmet = require('helmet');
 
 const passport = require('passport');
 const boom = require('@hapi/boom');
 const cookieParser = require('cookie-parser');
 const axios = require('axios');
 
-const { config } = require("../config/index");
+const { config } = require('../config/index');
+
+/**
+ * Constants of cookies lifetime in seconds
+ */
+const THIRTY_DAYS_IN_SEC = 2592000;
+const TWO_HOURS_IN_SEC = 7200;
+
 const { ENV, PORT } = process.env;
-const app = express(); 
+const app = express();
 
+if (ENV === 'development') {
+  console.log('development config');
+  const webpackConfig = require('../../webpack.config');
+  const webpackDevMiddleware = require('webpack-dev-middleware');
+  const webpackHotMiddleware = require('webpack-hot-middleware');
+  const compiler = webpack(webpackConfig);
+  const serverConfig = { port: PORT, hot: true };
 
-if(ENV === 'development'){
-    console.log('development config');
-    const webpackConfig = require('../../webpack.config');
-    const webpackDevMiddleware = require('webpack-dev-middleware');
-    const webpackHotMiddleware = require('webpack-hot-middleware');
-    const compiler = webpack(webpackConfig);
-    const serverConfig = {port: PORT, hot: true};
+  app.use(webpackDevMiddleware(compiler, serverConfig));
+  app.use(webpackHotMiddleware(compiler));
 
-    app.use(webpackDevMiddleware(compiler,serverConfig));
-    app.use(webpackHotMiddleware(compiler));
-
-}else {
+} else {
   app.use((req, res, next) => {
     if (!req.hashManifest) req.hashManifest = getManifest();
     next();
@@ -53,7 +58,6 @@ const setResponse = (html, preloadedState, manifest) => {
   const mainStyles = manifest ? manifest['main.css'] : 'assets/app.css';
   const mainBuild = manifest ? manifest['main.js'] : 'assets/app.js';
   const vendorBuild = manifest ? manifest['vendors.js'] : 'assets/vendor.js';
-
 
   return (`
     <!DOCTYPE html>
@@ -77,8 +81,8 @@ const setResponse = (html, preloadedState, manifest) => {
         <script src="https://kit.fontawesome.com/473d269aa9.js"></script>
       </body>
     </html>
-  `)
-}
+  `);
+};
 
 const renderApp = (req, res) => {
   const store = createStore(reducer, initialState);
@@ -88,11 +92,10 @@ const renderApp = (req, res) => {
       <StaticRouter location={req.url} context={{}}>
         {renderRoutes(serverRoutes)}
       </StaticRouter>
-    </Provider>
+    </Provider>,
   );
   res.send(setResponse(html, preloadedState, req.hashManifest));
-}
-
+};
 
 /**
  * Using a body parser to work with the information
@@ -103,106 +106,97 @@ app.use(express.json());
  */
 app.use(cookieParser());
 
-
 app.use(passport.initialize());
 app.use(passport.session());
 
 /**
- * We get the passport basic strategy to use the email password authentication 
+ * We get the passport basic strategy to use the email password authentication
  */
 require('./utils/auth/strategies/basic');
 
 /**
  * Sign in Endpoint
  */
-app.post("/auth/sign-in", async function(req, res, next) {
-  console.log('entre a sign in')
-/**
- * Get the rememberme attirbute 
- * if rememberme is true we give 30 days lifetime to the cookie 
- * if rememberme is false we give 2 hours lifetime to the cookie 
+app.post('/auth/sign-in', async (req, res, next) => {
+  /**
+ * Get the rememberme attirbute
+ * if rememberme is true we give 30 days lifetime to the cookie
+ * if rememberme is false we give 2 hours lifetime to the cookie
 */
-    const { rememberMe } = req.body; 
+  const { rememberMe } = req.body;
 
-/**
+  /**
  * Call to the basic authentication
 */
-    passport.authenticate("basic", function(error, data) {
-        try{
-        /**
+  passport.authenticate('basic', (error, data) => {
+    try {
+      /**
          * verifying the user authentication
         */
-            if(error || !data){
-                next(boom.unauthorized());
-            }
-            
-            req.login(data, { session: false }, async function(error){
-                if(error){
-                    next(error);
-                }
-                /**
+      if (error || !data) {
+        next(boom.unauthorized());
+      }
+
+      req.login(data, { session: false }, async (err) => {
+        if (err) {
+          next(err);
+        }
+        /**
                  * Creating the cookie in the client browser
                 */
-               const { token, ...user } = data.body;
-                res.cookie("token", token, {
-                    httpOnly: !config.dev,
-                    secure: !config.dev,
-                    maxAge: rememberMe ? THIRTY_DAYS_IN_SEC : TWO_HOURS_IN_SEC
-                });
-                /**
-                 * Response to the user
-                */
-               console.log(`respuesta: ${user}`);
-                res.status(200).json(user);
-            })
-        }catch(error) {
-            next(error);
-        }
-
-    })(req, res, next)
-});
-/**
- * Sign up Endpoint 
- */
-app.post("/auth/sign-up", async function(req, res, next) {
-    const { body: user } = req;
-
-    try{
-        const userData = await axios({
-            url: `${config.apiUrl}/api/auth/sign-up`,
-            method: "post",
-            data: {
-              'email': user.email,
-              'name': user.name,
-              'password': user.password
-            }
+        const { token, ...user } = data.body;
+        res.cookie('token', token, {
+          httpOnly: !(config.env === 'development'),
+          secure: !(config.env === 'development'),
+          maxAge: rememberMe ? THIRTY_DAYS_IN_SEC : TWO_HOURS_IN_SEC,
         });
-        /* *
+        /**
          * Response to the user
         */
-        res.status(201).json({ 
-          name: req.body.name,
-          email: req.body.email,
-          id: userData.data.id
-        })
-
-    }catch(error){
-        next(error);
+        res.status(200).json({ token, user });
+      });
+    } catch (err) {
+      next(err);
     }
+
+  })(req, res, next);
 });
+/**
+ * Sign up Endpoint
+ */
+app.post('/auth/sign-up', async (req, res, next) => {
+  const { body: user } = req;
 
+  try {
+    const userData = await axios({
+      url: `${config.apiUrl}/api/auth/sign-up`,
+      method: 'post',
+      data: {
+        'email': user.email,
+        'name': user.name,
+        'password': user.password,
+      },
+    });
+    /* *
+         * Response to the user
+        */
+    res.status(201).json({
+      name: req.body.name,
+      email: req.body.email,
+      id: userData.data.id,
+    });
 
-
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.get('*', renderApp);
 
 app.listen(PORT, (err) => {
-  if(err) console.error(err);
+  if (err) console.error(err);
   else console.log(`Server is running in the port ${PORT}`);
-})
-
-
-
+});
 
 // const userAPI = require('./routes/userAPI');
 // const productsAPI = require('./routes/productsAPI.js');
@@ -210,30 +204,20 @@ app.listen(PORT, (err) => {
 // const addressesAPI = require('./routes/addressesAPI');
 // const shopCartAPI = require('./routes/shopCartAPI');
 
-// /**
-//  * Constants of cookies lifetime in seconds
-//  */
-// const THIRTY_DAYS_IN_SEC = 2592000;
-// const TWO_HOURS_IN_SEC = 7200;
-
-
-
 // body-parser
 // const bodyParser = require('body-parser')
 // let urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 // /**
-//  * We get the passport  strategy to use oauth authentication 
+//  * We get the passport  strategy to use oauth authentication
 //  */
 // require('./utils/auth/strategies/oauth');
 
-
 // /**
-//  * We get the passport  strategy to use 
-//  * google authentication 
+//  * We get the passport  strategy to use
+//  * google authentication
 //  */
 // require('./utils/auth/strategies/google');
-
 
 // /**
 //  * request to google-oauth
@@ -264,7 +248,7 @@ app.listen(PORT, (err) => {
 //     res.cookie("token", token, {
 //       httpOnly: !config.dev,
 //       secure: !config.dev,
-//       maxAge: THIRTY_DAYS_IN_SEC 
+//       maxAge: THIRTY_DAYS_IN_SEC
 //     });
 //   /**
 //    * Response to the user
@@ -291,7 +275,7 @@ app.listen(PORT, (err) => {
 //     }
 
 //     const { token, ...user } = req.user;
-    
+
 //     res.cookie('email', user.user.email, {
 //       httpOnly: !config.dev,
 //       secure: !config.dev,
@@ -304,7 +288,6 @@ app.listen(PORT, (err) => {
 //       httpOnly: !config.dev,
 //       secure: !config.dev,
 //     });
-
 
 //     res.cookie('token', token, {
 //       httpOnly: !config.dev,
@@ -348,6 +331,4 @@ app.listen(PORT, (err) => {
 // app.get('/', (req, res) => {
 //   res.send(`API auth v 0.01`);
 // });
-
-
 

@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import googleIcon from '../assets/images/google.png';
-import { loginRequest } from '../actions';
+import { loginUser } from '../actions';
 //import {  loginUser, loginUserGoogle } from '../actions';
 
 import '../styles/containers/Login.styl';
@@ -22,8 +22,7 @@ const Login = (props) => {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    props.loginRequest(form);
-    props.history.push('/');
+    props.loginUser(form, '/');
   };
 
   const handleGoogle = (event) => {
@@ -38,7 +37,7 @@ const Login = (props) => {
       <section className='login'>
         <section className='login__container'>
           <h2>Ingresar</h2>
-          <form action='login__container--form' onSubmit={handleSubmit}>
+          <form className='login__container--form' onSubmit={handleSubmit}>
             <input
               name='email'
               className='input'
@@ -53,7 +52,7 @@ const Login = (props) => {
               placeholder='Contraseña'
               onChange={handleInput}
             />
-            <button className='button'>Iniciar Sesión</button>
+            <button className='button' type='submit'>Iniciar Sesión</button>
             <div className='login__container--remember-me'>
               <label>
                 <input type='checkbox' name='rememberMe' id='cbox1' value='checkbox' />
@@ -79,6 +78,6 @@ const Login = (props) => {
 };
 
 const mapDispatchToProps = {
-  loginRequest,
+  loginUser,
 };
 export default connect(null, mapDispatchToProps)(Login);
