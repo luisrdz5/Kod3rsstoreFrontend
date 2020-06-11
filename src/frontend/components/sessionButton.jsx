@@ -6,6 +6,11 @@ const ButtonSession = (props) => {
   const { user } = props;
   const hasUser = user ;
   const handleLogout = () => {
+    document.cookie = 'email=';
+    document.cookie = 'first_name=';
+    document.cookie = 'id_users=';
+    document.cookie = 'photo=';
+    document.cookie = 'token=';
     props.logoutRequest({});
     window.location.href = '/login';
   };
