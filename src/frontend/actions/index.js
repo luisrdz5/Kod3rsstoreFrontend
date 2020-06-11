@@ -82,8 +82,8 @@ export const loginUser = ({ email, password, rememberMe }, redirectUrl) => {
       .then(({ data }) => {
         const { user, token } = data;
         document.cookie = `email=${user.user.email}`;
-        document.cookie = `name=${user.user.first_name}`;
-        document.cookie = `id=${user.user.id_users}`;
+        document.cookie = `first_name=${user.user.first_name}`;
+        document.cookie = `id_users=${user.user.id_users}`;
         document.cookie = `photo=${user.user.photo}`;
         document.cookie = `token=${token}`;
         dispatch(loginRequest(user.user));

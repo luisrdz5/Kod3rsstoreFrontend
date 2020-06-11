@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
@@ -85,12 +86,31 @@ const setResponse = (html, preloadedState, manifest) => {
 };
 
 const renderApp = (req, res) => {
-  const store = createStore(reducer, initialState);
+
+  let initState;
+
+  //getting the user data 
+  const { email, first_name, id_users, photo, cart } = req.cookies;
+
+  if (id_users) {
+    initState = {
+      ...initialState,
+      user: {
+        email, first_name, id_users, photo,
+      },
+      cart: JSON.parse(cart),
+    };
+  } else {
+    initState = initialState;
+  }
+
+  const store = createStore(reducer, initState);
   const preloadedState = store.getState();
+  const isLogged = initState.user.id_users;
   const html = renderToString(
     <Provider store={store}>
       <StaticRouter location={req.url} context={{}}>
-        {renderRoutes(serverRoutes)}
+        {renderRoutes(serverRoutes(isLogged))}
       </StaticRouter>
     </Provider>,
   );

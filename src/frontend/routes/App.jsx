@@ -10,18 +10,18 @@ import Home from '../containers/Home';
 import ProductDetail from '../containers/productDetail';
 import Profile from '../containers/Profile';
 
-const App = () => (
+const App = ({ isLogged }) => (
   <BrowserRouter>
     <Layout>
       <Switch>
         <Route exact path='/' component={Home} />
         <Route exact path='/products' component={Products} />
         <Route exact path='/productDetail/:id' component={ProductDetail} />
-        <Route exact path='/checkout' component={Checkout} />
-        <Route exact path='/login' component={Login} />
-        <Route exact path='/register' component={Register} />
-        <Route exact path='/profile' component={Profile} />
-        <Route exact path='/profile/:edit' component={Profile} />
+        <Route exact path='/checkout' component={isLogged ? Checkout : Login} />
+        <Route exact path='/login' component={!isLogged ? Login : Home} />
+        <Route exact path='/register' component={!isLogged ? Register : Home} />
+        <Route exact path='/profile' component={!isLogged ? Login : Profile} />
+        <Route exact path='/profile/:edit' component={!isLogged ? Login : Profile} />
         <Route component={NotFound} />
       </Switch>
     </Layout>
