@@ -45,7 +45,8 @@ if (ENV === 'development') {
 
 } else {
   app.use((req, res, next) => {
-    if (!req.hashManifest) req.hashManifest = getManifest();
+    //if (!req.hashManifest) req.hashManifest = getManifest();
+    req.hashManifest = getManifest();
     next();
   });
 

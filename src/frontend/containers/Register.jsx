@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { registerUser } from '../actions';
 import '../styles/containers/Register.styl';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const Register = (props) => {
   const [form, setValues] = useState({
@@ -23,6 +25,7 @@ const Register = (props) => {
   };
   return (
     <>
+      <Header />
       <section className='Register'>
         <section className='Register__container'>
           <h2>Regístrate</h2>
@@ -60,6 +63,7 @@ const Register = (props) => {
           </p>
         </section>
       </section>
+      <Footer />
     </>
   );
 };

@@ -4,7 +4,7 @@ import NotFound from '../containers/NotFound';
 import Login from '../containers/Login';
 import Register from '../containers/Register';
 import Home from '../containers/Home';
-import ProductDetail from '../containers/productDetail';
+import goHome from '../containers/goHome';
 import Profile from '../containers/Profile';
 
 const serverRoutes = (isLogged) => {
@@ -19,16 +19,12 @@ const serverRoutes = (isLogged) => {
       component: Products,
     }, {
       exact: true,
-      path: '/productDetail/:id',
-      component: ProductDetail,
-    }, {
-      exact: true,
       path: '/checkout',
       component: isLogged ? Checkout : Login,
     }, {
       exact: true,
       path: '/login',
-      component: isLogged ? Login : Home,
+      component: !isLogged ? Login : Home,
     }, {
       exact: true,
       path: '/register',
@@ -36,10 +32,6 @@ const serverRoutes = (isLogged) => {
     }, {
       exact: true,
       path: '/profile',
-      component: !isLogged ? Login : Profile,
-    }, {
-      exact: true,
-      path: '/profile/:edit',
       component: !isLogged ? Login : Profile,
     }, {
       name: 'NotFound',

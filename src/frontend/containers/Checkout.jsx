@@ -5,6 +5,9 @@ import '../styles/components/Checkout.styl';
 import StripeCheckout from 'react-stripe-checkout';
 import { deleteFromCart, emptyCart } from '../actions';
 
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+
 const Checkout = (props) => {
   const { cart } = props;
 
@@ -23,6 +26,7 @@ const Checkout = (props) => {
 
   return (
     <>
+      <Header />
       <div className='Checkout'>
         <div className='Checkout-content'>
           {cart.length > 0 ? <h3>Lista de Pedidos:</h3> : <h2>Sin Pedidos</h2>}
@@ -59,6 +63,7 @@ const Checkout = (props) => {
         />
 
       </div>
+      <Footer />
     </>
   );
 };

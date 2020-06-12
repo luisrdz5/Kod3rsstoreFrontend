@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 import googleIcon from '../assets/images/google.png';
 import { loginUser } from '../actions';
 //import {  loginUser, loginUserGoogle } from '../actions';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 import '../styles/containers/Login.styl';
 
@@ -34,6 +36,7 @@ const Login = (props) => {
 
   return (
     <>
+      <Header />
       <section className='login'>
         <section className='login__container'>
           <h2>Ingresar</h2>
@@ -73,6 +76,7 @@ const Login = (props) => {
           <Link to='/register'>Registrate</Link>
         </p>
       </section>
+      <Footer />
     </>
   );
 };

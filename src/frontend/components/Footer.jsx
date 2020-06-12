@@ -2,9 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/components/Footer.styl';
 
-import instagram from '../assets/icons/instagram.svg';
-import twitter from '../assets/icons/twitter.svg';
-import facebook from '../assets/icons/facebook.svg';
+import instagram from '../assets/icons/instagram.png';
+import twitter from '../assets/icons/twitter.png';
+import facebook from '../assets/icons/facebook.png';
 
 const Footer = () => (
   <div className='Footer'>

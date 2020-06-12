@@ -1,15 +1,10 @@
 import React from 'react';
-import Header from './Header';
-import Footer from './Footer';
 import '../styles/components/Layout.styl';
 
 const Layout = ({ children }) => (
-  <>
-    <Header />
+  <div className='App'>
     {children}
-    <Footer />
-
-  </>
+  </div>
 );
 
 export default Layout;
